@@ -16,6 +16,7 @@ const {
   RestaurantController,
 } = require("./controllers/restaurants.controller");
 const { ServiceController } = require("./controllers/services.controller");
+const { WeatherController } = require("./controllers/weather.controller");
 
 // middleware
 app.use(bodyParser.json());
@@ -26,12 +27,14 @@ const placeRouter = express.Router();
 const landMarkRouter = express.Router();
 const restaurantRouter = express.Router();
 const serviceRouter = express.Router();
+const weatherRouter = express.Router();
 
 app.use("/api/v1/news", newsRouter);
 app.use("/api/v1/places", placeRouter);
 app.use("/api/v1/landmarks/", landMarkRouter);
 app.use("/api/v1/restaurants/", restaurantRouter);
 app.use("/api/v1/services/", serviceRouter);
+app.use("/api/v1/weather/", weatherRouter);
 
 // place routes
 placeRouter.get("/", PlacesController.getAll);
@@ -67,6 +70,9 @@ serviceRouter.get("/:id", ServiceController.get);
 serviceRouter.get("/place/:placeId", ServiceController.getAllByPlaceId);
 serviceRouter.put("/:id", ServiceController.update);
 serviceRouter.delete("/:id", ServiceController.delete);
+
+// weather
+weatherRouter.get("/:id", WeatherController.get);
 
 app.listen(PORT, () => {
   console.log(`Running on port ${PORT}`);
