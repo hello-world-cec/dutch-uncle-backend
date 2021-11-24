@@ -2,6 +2,7 @@ const express = require("express");
 const app = express();
 const bodyParser = require("body-parser");
 const mongoose = require("mongoose");
+const cors = require("cors");
 
 require("dotenv").config();
 
@@ -20,6 +21,7 @@ const { WeatherController } = require("./controllers/weather.controller");
 
 // middleware
 app.use(bodyParser.json());
+app.use(cors());
 
 // Routes
 const newsRouter = express.Router();
