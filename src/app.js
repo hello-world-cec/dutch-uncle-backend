@@ -29,8 +29,8 @@ const restaurantRouter = express.Router();
 const serviceRouter = express.Router();
 const weatherRouter = express.Router();
 
-app.use("/api/v1/news", newsRouter);
-app.use("/api/v1/places", placeRouter);
+app.use("/api/v1/news/", newsRouter);
+app.use("/api/v1/places/", placeRouter);
 app.use("/api/v1/landmarks/", landMarkRouter);
 app.use("/api/v1/restaurants/", restaurantRouter);
 app.use("/api/v1/services/", serviceRouter);
@@ -42,6 +42,7 @@ placeRouter.post("/", PlacesController.create);
 placeRouter.put("/:id", PlacesController.update);
 placeRouter.delete("/:id", PlacesController.delete);
 placeRouter.get("/:id", PlacesController.get);
+placeRouter.get("/name/:name", PlacesController.getByName);
 
 // News Routes
 newsRouter.post("/", NewsController.create);
