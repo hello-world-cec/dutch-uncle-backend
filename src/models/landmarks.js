@@ -3,7 +3,8 @@ const mongoose = require("mongoose");
 const landMarkSchema = new mongoose.Schema(
   {
     name: { type: String, require: true },
-    about: { type: String, require: true },
+    imageURL: { type: String },
+    about: { type: String },
   },
   { timestamps: true }
 );
