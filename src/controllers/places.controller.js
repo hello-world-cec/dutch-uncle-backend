@@ -33,17 +33,35 @@ const PlacesController = {
   },
 
   async get(req, res) {
-    res.send(await Place.findById(req.params.id));
+    const place = await Place.findById(req.params.id);
+    if (!place) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(place);
+    }
   },
 
   async update(req, res) {
-    await Place.findOneAndUpdate({ _id: req.params.id }, req.body);
-    res.send(await Place.findById(req.params.id));
+    const place = await Place.findOneAndUpdate(
+      { _id: req.params.id },
+      req.body,
+      { new: true }
+    );
+
+    if (!place) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(place);
+    }
   },
 
   async delete(req, res) {
-    await Place.findOneAndDelete({ _id: req.params.id });
-    res.send({ message: "Successfully deleted" });
+    const place = await Place.findOneAndDelete({ _id: req.params.id });
+    if (!place) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send({ message: "Successfully deleted" });
+    }
   },
 };
 

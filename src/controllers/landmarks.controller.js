@@ -17,12 +17,21 @@ const LandMarkController = {
     const place = await Place.findById(req.params.placeId).populate(
       "landmarks"
     );
-    res.send(place.landmarks);
+
+    if (!place) {
+      res.status(404).send({ message: "Place not found" });
+    } else {
+      res.send(place.landmarks);
+    }
   },
 
   async get(req, res) {
     const landmark = await LandMark.findById(req.params.id);
-    res.send(landmark);
+    if (!landmark) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(landmark);
+    }
   },
 
   async update(req, res) {
@@ -33,12 +42,21 @@ const LandMarkController = {
         new: true,
       }
     );
-    res.send(landmark);
+
+    if (!landmark) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(landmark);
+    }
   },
 
   async delete(req, res) {
-    await LandMark.findOneAndDelete({ _id: req.params.id });
-    res.send({ message: "Successfully deleted" });
+    const landmark = await LandMark.findOneAndDelete({ _id: req.params.id });
+    if (!landmark) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send({ message: "Successfully deleted" });
+    }
   },
 };
 

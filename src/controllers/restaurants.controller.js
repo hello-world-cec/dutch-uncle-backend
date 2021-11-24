@@ -17,12 +17,20 @@ const RestaurantController = {
     const place = await Place.findById(req.params.placeId).populate(
       "restaurants"
     );
-    res.send(place.restaurants);
+    if (!place) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(place.restaurants);
+    }
   },
 
   async get(req, res) {
     const restaurant = await Restaurant.findById(req.params.id);
-    res.send(restaurant);
+    if (!restaurant) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(restaurant);
+    }
   },
 
   async update(req, res) {
@@ -33,12 +41,22 @@ const RestaurantController = {
         new: true,
       }
     );
-    res.send(restaurant);
+    if (!restaurant) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(restaurant);
+    }
   },
 
   async delete(req, res) {
-    await Restaurant.findOneAndDelete({ _id: req.params.id });
-    res.send({ message: "Successfully deleted" });
+    const restaurant = await Restaurant.findOneAndDelete({
+      _id: req.params.id,
+    });
+    if (!restaurant) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send({ message: "Successfully deleted" });
+    }
   },
 };
 

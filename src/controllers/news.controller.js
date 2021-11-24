@@ -15,24 +15,40 @@ const NewsController = {
 
   async getAllByPlaceId(req, res) {
     const place = await Place.findById(req.params.placeId).populate("news");
-    res.send(place.news);
+    if (!place) {
+      res.status(404).send({ message: "Place not found" });
+    } else {
+      res.send(place.news);
+    }
   },
 
   async get(req, res) {
     const news = await News.findById(req.params.id);
-    res.send(news);
+    if (!news) {
+      res.status(404).send({ message: "Place not found" });
+    } else {
+      res.send(news);
+    }
   },
 
   async update(req, res) {
     const news = await News.findOneAndUpdate({ _id: req.params.id }, req.body, {
       new: true,
     });
-    res.send(news);
+    if (!news) {
+      res.status(404).send({ message: "Place not found" });
+    } else {
+      res.send(news);
+    }
   },
 
   async delete(req, res) {
-    await News.findOneAndDelete({ _id: req.params.id });
-    res.send({ message: "Successfully deleted" });
+    const news = await News.findOneAndDelete({ _id: req.params.id });
+    if (!news) {
+      res.status(404).send({ message: "Place not found" });
+    } else {
+      res.send({ message: "Successfully deleted" });
+    }
   },
 };
 

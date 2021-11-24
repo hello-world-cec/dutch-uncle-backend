@@ -6,9 +6,18 @@ const WeatherController = {
     const placeId = req.params.id;
 
     const place = await Place.findById(placeId);
-    const weather = await WeatherService.getPlaceWeather(place.name);
-
-    res.send(weather);
+    if (!place) {
+      res.status(404).send({ message: "Place not found" });
+    } else {
+      try {
+        const weather = await WeatherService.getPlaceWeather(place.name);
+        res.send(weather);
+      } catch (e) {
+        res
+          .status(500)
+          .send({ message: "Error occurred during weather fetch" });
+      }
+    }
   },
 };
 

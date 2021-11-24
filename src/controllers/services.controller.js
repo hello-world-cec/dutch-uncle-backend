@@ -15,13 +15,20 @@ const ServiceController = {
 
   async getAllByPlaceId(req, res) {
     const place = await Place.findById(req.params.placeId).populate("services");
-    res.send(place.services);
+    if (!place) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(place.services);
+    }
   },
 
   async get(req, res) {
     const service = await Service.findById(req.params.id);
-    console.log(service);
-    res.send(service);
+    if (!service) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(service);
+    }
   },
 
   async update(req, res) {
@@ -32,12 +39,20 @@ const ServiceController = {
         new: true,
       }
     );
-    res.send(service);
+    if (!service) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send(service);
+    }
   },
 
   async delete(req, res) {
-    await Service.findOneAndDelete({ _id: req.params.id });
-    res.send({ message: "Successfully deleted" });
+    const service = await Service.findOneAndDelete({ _id: req.params.id });
+    if (!service) {
+      res.status(404).send({ message: "Resource not found" });
+    } else {
+      res.send({ message: "Successfully deleted" });
+    }
   },
 };
 
