@@ -6,7 +6,7 @@ const WeatherController = {
     const placeId = req.params.id;
 
     const place = await Place.findById(placeId);
-    const weather = await WeatherService.getPlaceWeather();
+    const weather = await WeatherService.getPlaceWeather(place.name);
 
     res.send(weather);
   },

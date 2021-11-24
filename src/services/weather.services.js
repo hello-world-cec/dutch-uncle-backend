@@ -1,9 +1,9 @@
 const axios = require("axios");
 
 const WeatherService = {
-  async getPlaceWeather() {
+  async getPlaceWeather(name) {
     const response = await axios.get(
-      "https://api.openweathermap.org/data/2.5/weather?q=Chengannur&appid=73387c4e0f4fed2ef38019456b8c3125"
+      `https://api.openweathermap.org/data/2.5/weather?q=${name}&appid=${process.env.OPENWEATHER_API_KEY}`
     );
 
     return await response.data;
