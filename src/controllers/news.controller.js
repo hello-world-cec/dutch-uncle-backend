@@ -1,4 +1,4 @@
-const { News } = require("../models/News");
+const { News } = require("../models/news");
 const { Place } = require("../models/places");
 
 const NewsController = {
